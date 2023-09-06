@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Picker from "./Picker";
 import {
   TextInput,
   View,
@@ -14,11 +15,20 @@ import colors from "../config/colors";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import AppText from "./AppText";
 import Screen from "./Screen";
-import Picker from "./Picker";
+import { number } from "yup";
 
-function AppPicker({ icon, items, placeholder, onSelectedItem, selectedItem }) {
+function AppPicker({
+  icon,
+  items,
+  placeholder,
+  onSelectedItem,
+  selectedItem,
+  PickerItemComponent = Picker,
+  numberOfColumns=1,
+  width = "50%",
+}) {
   const [initialState, setModal] = useState(false);
-  
+
   return (
     <>
       <TouchableWithoutFeedback
@@ -26,7 +36,7 @@ function AppPicker({ icon, items, placeholder, onSelectedItem, selectedItem }) {
           setModal(true);
         }}
       >
-        <View style={styles.container}>
+        <View style={styles.container} width={width}>
           {icon && (
             <MaterialCommunityIcons
               name={icon}
@@ -36,7 +46,9 @@ function AppPicker({ icon, items, placeholder, onSelectedItem, selectedItem }) {
             />
           )}
 
-          <AppText style={styles.text}>{selectedItem ? selectedItem.label : placeholder}</AppText>
+          <AppText style={styles.text}>
+            {selectedItem ? selectedItem.label : placeholder}
+          </AppText>
           {icon && (
             <MaterialCommunityIcons
               name="chevron-down"
@@ -51,12 +63,18 @@ function AppPicker({ icon, items, placeholder, onSelectedItem, selectedItem }) {
           <Button title="CLOSE" onPress={() => setModal(false)} />
           <FlatList
             data={items}
+            numColumns={numberOfColumns}
             keyExtractor={(item) => item.value.toString()}
-            renderItem={({item})=><Picker label={item.label} onPress={()=>{
-                setModal(false);
-                onSelectedItem(item)
-
-            }}/>}
+            renderItem={({ item }) => (
+              <PickerItemComponent
+                item={item}
+                label={item.label}
+                onPress={() => {
+                  setModal(false);
+                  onSelectedItem(item);
+                }}
+              />
+            )}
           />
         </Screen>
       </Modal>

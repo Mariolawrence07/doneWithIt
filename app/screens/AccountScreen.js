@@ -20,9 +20,10 @@ const menuItems = [
       name: "email",
       backgroundColor: colors.secondary,
     },
+    route: "Messages",
   },
 ];
-function AccountScreen(props) {
+function AccountScreen({ navigation }) {
   return (
     <Screen style={styles.screen}>
       <View style={styles.container}>
@@ -37,13 +38,25 @@ function AccountScreen(props) {
           data={menuItems}
           keyExtractor={(menuItem) => menuItem.name}
           renderItem={({ item }) => (
-            <ListItem title={item.name} ImageComponent={<Icon  backgroundColor={item.Icon.backgroundColor} name={item.Icon.name}/>} />
+            <ListItem
+              title={item.name}
+              ImageComponent={
+                <Icon
+                  backgroundColor={item.Icon.backgroundColor}
+                  name={item.Icon.name}
+                />
+              }
+              onPress={() => navigation.navigate(item.route)}
+            />
           )}
           ItemSeparatorComponent={<ListItemSeperator />}
         />
       </View>
       <View style={styles.container}>
-        <ListItem ImageComponent={<Icon backgroundColor="#ffe66d"/>} title=" logout"/>
+        <ListItem
+          ImageComponent={<Icon backgroundColor="#ffe66d" />}
+          title=" logout"
+        />
       </View>
     </Screen>
   );

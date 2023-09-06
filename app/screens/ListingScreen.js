@@ -4,15 +4,15 @@ import Card from "../components/Card";
 import { View, StyleSheet, FlatList } from "react-native";
 import colors from "../config/colors";
 
-function ListingScreen(props) {
+function ListingScreen({ navigation }) {
   const ListItems = [
     {
-      image: require('../assets/jacket.jpg'),
+      image: require("../assets/jacket.jpg"),
       title: "Red jacket for sale",
       price: "$1600",
     },
     {
-      image: require('../assets/couch.jpg'),
+      image: require("../assets/couch.jpg"),
       title: "Couch in great condition",
       price: "$100",
     },
@@ -24,7 +24,12 @@ function ListingScreen(props) {
           data={ListItems}
           keyExtractor={(ListItem) => ListItem.title}
           renderItem={({ item }) => (
-            <Card image={item.image} title={item.title} subTitle={item.price} />
+            <Card
+              image={item.image}
+              title={item.title}
+              subTitle={item.price}
+              onPress={() => navigation.navigate("ListingDetails", item)}
+            />
           )}
         />
       </View>

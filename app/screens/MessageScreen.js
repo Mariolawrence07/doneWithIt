@@ -35,7 +35,7 @@ function MessageScreen() {
     setMessages(messages.filter((m) => m.id !== message.id));
   };
   return (
-    <SafeAreaView style={styles.screen}>
+    <Screen>
       <FlatList
         data={messages}
         keyExtractor={(message) => message.id.toString()}
@@ -63,13 +63,8 @@ function MessageScreen() {
           ]);
         }}
       />
-    </SafeAreaView>
+    </Screen>
   );
 }
-const styles = StyleSheet.create({
-  screen: {
-    paddingTop: Platform.OS === "andriod" ? StatusBar.currentHeight : 0,
-  },
-});
 
 export default MessageScreen;

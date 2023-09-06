@@ -3,7 +3,7 @@ import { useFormikContext } from "formik";
 import ErrorMessage from "./ErrorMessage";
 import AppTextInput from "./AppTextInput";
 
-function AppFormFields({ name, ...otherProps }) {
+function AppFormFields({ name, width, ...otherProps }) {
   const { handleChange, setFieldTouched, errors, touched } = useFormikContext();
   return (
     <>
@@ -17,6 +17,7 @@ function AppFormFields({ name, ...otherProps }) {
         // placeholder="Email"
         // textContentType="emailAddress"
         {...otherProps}
+        width={width}
       />
       <ErrorMessage error={errors[name]} visible={touched[name]} />
     </>
